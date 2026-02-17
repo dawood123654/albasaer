@@ -1017,7 +1017,7 @@ https://docs.google.com/forms/d/e/1FAIpQLScTmKappSBMaC3RrvyzYobUorl-qxiKvYuwCG07
             <p>إجابات على أكثر الأسئلة تكراراً</p>
         </div>
         <div class="faq-container">
-            <div class="faq-item" >
+            <div class="faq-item" onclick="toggleFaq(this)">
                 <div class="faq-question">
                     <span>هل الدبلوم معتمد؟</span>
                     <span class="faq-icon">+</span>
@@ -1027,7 +1027,7 @@ https://docs.google.com/forms/d/e/1FAIpQLScTmKappSBMaC3RrvyzYobUorl-qxiKvYuwCG07
                 </div>
             </div>
             
-            <div class="faq-item">
+            <div class="faq-item" onclick="toggleFaq(this)">
                 <div class="faq-question">
                     <span>ما هي مدة الدبلوم؟</span>
                     <span class="faq-icon">+</span>
@@ -1037,7 +1037,7 @@ https://docs.google.com/forms/d/e/1FAIpQLScTmKappSBMaC3RrvyzYobUorl-qxiKvYuwCG07
                 </div>
             </div>
             
-            <div class="faq-item" >
+            <div class="faq-item" onclick="toggleFaq(this)">
                 <div class="faq-question">
                     <span>هل يمكنني الدراسة وأنا موظف؟</span>
                     <span class="faq-icon">+</span>
@@ -1047,7 +1047,7 @@ https://docs.google.com/forms/d/e/1FAIpQLScTmKappSBMaC3RrvyzYobUorl-qxiKvYuwCG07
                 </div>
             </div>
             
-            <div class="faq-item" >
+            <div class="faq-item" onclick="toggleFaq(this)">
                 <div class="faq-question">
                     <span>ما هي طرق الدفع المتاحة؟</span>
                     <span class="faq-icon">+</span>
@@ -1057,7 +1057,7 @@ https://docs.google.com/forms/d/e/1FAIpQLScTmKappSBMaC3RrvyzYobUorl-qxiKvYuwCG07
                 </div>
             </div>
             
-            <div class="faq-item" >
+            <div class="faq-item" onclick="toggleFaq(this)">
                 <div class="faq-question">
                     <span>ما هي الهدية المرفقة مع الدبلوم؟</span>
                     <span class="faq-icon">+</span>
@@ -1156,57 +1156,33 @@ https://docs.google.com/forms/d/e/1FAIpQLScTmKappSBMaC3RrvyzYobUorl-qxiKvYuwCG07
         }, 1000);
 
        
-        document.addEventListener('DOMContentLoaded', function () {
-
-    // الفورم (لو موجود)
-    const form = document.getElementById('registrationForm');
-    if (form) {
-        form.addEventListener('submit', function (e) {
+        document.getElementById('registrationForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            const modal = document.getElementById('successModal');
-            if (modal) modal.classList.add('active');
+            document.getElementById('successModal').classList.add('active');
         });
-    }
 
-    window.closeModal = function () {
-        const modal = document.getElementById('successModal');
-        if (modal) modal.classList.remove('active');
-        if (form) form.reset();
-    };
+        function closeModal() {
+            document.getElementById('successModal').classList.remove('active');
+            document.getElementById('registrationForm').reset();
+        }
 
-    // الأسئلة الشائعة
-    document.querySelectorAll('.faq-item').forEach(item => {
-        item.addEventListener('click', function () {
+        
+        function toggleFaq(element) {
+            element.classList.toggle('active');
+            const icon = element.querySelector('.faq-icon');
+            icon.textContent = element.classList.contains('active') ? '-' : '+';
+        }
 
-            document.querySelectorAll('.faq-item').forEach(el => {
-                if (el !== this) {
-                    el.classList.remove('active');
-                    const otherIcon = el.querySelector('.faq-icon');
-                    if (otherIcon) otherIcon.textContent = '+';
-                }
+       
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+            target.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
             });
-
-            this.classList.toggle('active');
-            const icon = this.querySelector('.faq-icon');
-            if (icon) {
-                icon.textContent = this.classList.contains('active') ? '-' : '+';
-            }
-
-        });
+        }
     });
-
-    // التمرير السلس
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-            e.preventDefault();
-            const target = document.querySelector(this.getAttribute('href'));
-            if (target) {
-                target.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start'
-                });
-            }
-        });
-    });
-
 });
