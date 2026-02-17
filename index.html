@@ -1155,11 +1155,14 @@ https://docs.google.com/forms/d/e/1FAIpQLScTmKappSBMaC3RrvyzYobUorl-qxiKvYuwCG07
             }
         }, 1000);
 
-       
-        document.getElementById('registrationForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            document.getElementById('successModal').classList.add('active');
-        });
+       const form = document.getElementById('registrationForm');
+
+if (form) {
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        document.getElementById('successModal').classList.add('active');
+    });
+}
 
         function closeModal() {
             document.getElementById('successModal').classList.remove('active');
